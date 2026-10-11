@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ded6c2">
+  <meta name="description" content="遺跡で見つけた音の宝石を聴いて、つなぎ、眠っていた小さな曲をよみがえらせる音楽パズル。">
+  <meta property="og:title" content="Musical Stones">
+  <meta property="og:url" content="https://monnouchi.github.io/musical-stones/">
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="遺跡で見つけた音の宝石を聴いて、つなぎ、眠っていた小さな曲をよみがえらせる音楽パズル。">
+  <meta property="og:image" content="https://monnouchi.github.io/musical-stones/assets/ogp.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Musical Stones。五線を彫った石の台座に、緑・金・紫・青の宝石が並ぶ音楽パズル。">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Musical Stones">
+  <meta name="twitter:description" content="音の宝石を聴いて、つなぎ、眠る曲をよみがえらせる音楽パズル。">
+  <meta name="twitter:image" content="https://monnouchi.github.io/musical-stones/assets/ogp.png">
+  <meta name="twitter:image:alt" content="五線を彫った石の台座に4つの宝石が並ぶMusical Stones。">
+  <link rel="canonical" href="https://monnouchi.github.io/musical-stones/">
+  <title>Musical Stones</title>
+  <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css?v=0.4.5">
+  <script type="module" src="./src/app.js?v=0.4.5"></script>
+</head>
+<body>
+  <svg class="ambient-staff" viewBox="0 0 1000 300" preserveAspectRatio="none" aria-hidden="true"><g><path d="M-40 100 Q210 55 480 110 T1040 90"/><path d="M-40 120 Q210 75 480 130 T1040 110"/><path d="M-40 140 Q210 95 480 150 T1040 130"/><path d="M-40 160 Q210 115 480 170 T1040 150"/><path d="M-40 180 Q210 135 480 190 T1040 170"/></g></svg>
+  <div class="shell">
+    <header class="site-header">
+      <a href="./" class="wordmark" aria-label="Musical Stones ホーム"><span class="brand-symbol" aria-hidden="true">◇</span> Musical Stones</a>
+      <div class="sound-settings"><button id="mute" type="button" class="quiet-button" aria-pressed="false">音あり</button><label class="sr-only" for="volume">音量</label><input id="volume" type="range" min="0" max="100" value="65" aria-label="音量"></div>
+    </header>
+    <main>
+      <section class="intro" aria-labelledby="title"><h1 id="title">Musical Stones</h1><p>音の宝石をつなぎ、小さな曲をよみがえらせる。</p></section>
+      <nav id="levels" class="level-nav" aria-label="曲を選ぶ"></nav>
+      <section class="puzzle" aria-labelledby="level-title">
+        <div class="puzzle-heading"><div><p id="level-kicker" class="eyebrow"></p><h2 id="level-title"></h2></div><div class="reference-wrap"><button id="reference" class="quiet-button" type="button">▷ お手本</button><aside id="reference-guide" class="reference-guide" aria-label="はじめての案内" hidden><p id="reference-guide-text" role="status"></p><button id="guide-dismiss" class="guide-dismiss" type="button">スキップ</button></aside></div></div>
+        <div id="gem-stage" class="gem-stage" aria-label="宝石と音の台座">
+          <span class="stone-label socket-label" aria-hidden="true">音の台座</span>
+          <div class="stone-staff" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+          <div id="sockets" class="sockets" aria-hidden="true"></div>
+          <svg id="connections" class="connections" preserveAspectRatio="none" aria-hidden="true"></svg>
+          <span class="stone-label shelf-label" aria-hidden="true">自由に動かせます</span>
+          <div id="gem-layer" class="gem-layer" role="group" aria-label="音の宝石。触れて試聴、ドラッグでくぼみへ。"></div>
+          <div id="drag-ghost" class="drag-ghost" aria-hidden="true" hidden></div>
+        </div>
+        <p id="gesture-status" class="gesture-status" role="status">自由に動かして、くぼみの近くへ。</p>
+        <div class="edit-bar" role="group" aria-label="ドラッグを使わない並べ替え">
+          <span id="active-name" class="active-name">宝石を選ぶ</span>
+          <button id="place-active" class="edit-button" type="button" disabled>はめる</button>
+          <button id="move-left" class="edit-button arrow-button" type="button" aria-label="選んだ宝石を左へ" disabled>←</button>
+          <button id="move-right" class="edit-button arrow-button" type="button" aria-label="選んだ宝石を右へ" disabled>→</button>
+          <button id="return-active" class="edit-button" type="button" disabled>外す</button>
+        </div>
+        <div class="transport"><button id="play-order" class="secondary-button" type="button" disabled>▷ 並びを聴く</button><button id="check" class="primary-button" type="button" disabled>よみがえらせる</button><button id="stop" class="stop-button" type="button" aria-label="停止" disabled>■</button></div>
+        <div class="playback-line"><span id="playback-state" role="status">触れると音が鳴ります。</span><span id="playback-time" aria-hidden="true"></span></div>
+        <div class="progress-track" aria-hidden="true"><span id="progress"></span></div>
+        <div id="feedback" class="feedback" role="status"></div>
+        <button id="next" class="next-button" type="button" hidden>次の音を探す →</button>
+      </section>
+      <details class="help"><summary>宝石の動かし方・曲のヒント</summary><p id="level-description"></p><p>宝石に触れると、その音が鳴ります。ドラッグして石のくぼみへ。近づけたときだけ吸着します。配置済みの宝石同士は入れ替わり、くぼみから離すと外れます。台座から引き離しても、自由な場所に置けます。盤面の端では安全に止まり、Escで取り消せます。曲線の光はどの並びでもつながり、正解のヒントにはなりません。</p><p>ドラッグが難しいときは、宝石を聴く→「はめる」で空いているくぼみへ。台座上では左右ボタンで交換、自由な位置では左右へ移動、「外す」で外せます。Tab で宝石へ移動、Enter / Space で試聴、数字 1〜4 で配置、矢印キーで自由移動、Shift＋左右で台座の交換、Deleteで外します。選んだあと盤面をタップしても動かせます。空のくぼみは飛ばして再生します。P は並びの再生、S / Esc は停止、M はミュート。</p><p>拡大文字ではスクロールして操作できます。画面を離れると停止し、戻っても自動再生しません。起動・再読み込みは台座を空にしてシャッフルし、最初から遊べます。プレイ中の配置は曲を切り替えても保持し、音量と消音は次回も使えます。</p><button id="guide-again" class="quiet-button" type="button">はじめての案内を見る</button><button id="shuffle" class="quiet-button" type="button">↝ シャッフルしてやり直す</button><button id="clear" class="quiet-button" type="button">すべて外す</button></details>
+    </main>
+  </div>
+  <dialog id="listening-room" class="listening-room" aria-labelledby="room-title" aria-describedby="room-state">
+    <svg class="room-staff" viewBox="0 0 1000 300" preserveAspectRatio="none" aria-hidden="true"><g><path d="M-40 100 Q210 55 480 110 T1040 90"/><path d="M-40 120 Q210 75 480 130 T1040 110"/><path d="M-40 140 Q210 95 480 150 T1040 130"/><path d="M-40 160 Q210 115 480 170 T1040 150"/><path d="M-40 180 Q210 135 480 190 T1040 170"/></g></svg>
+    <div class="room-content"><p class="eyebrow">THE SONG AWAKENS</p><h2 id="room-title"></h2><p>眠っていた音が、ひとつになる。</p><div id="room-gems" class="room-gems" aria-hidden="true"></div><div class="room-progress" aria-hidden="true"><span id="room-progress"></span></div><p id="room-state" role="status"></p><button id="room-stop" class="room-stop" type="button">■ 聴くのをやめる</button><div class="room-sound"><button id="room-mute" class="quiet-button" type="button" aria-pressed="false">音あり</button><label class="sr-only" for="room-volume">音量</label><input id="room-volume" type="range" min="0" max="100" value="65" aria-label="音量"></div></div>
+  </dialog>
+  <noscript>JavaScript を有効にして、この音楽パズルを遊んでください。</noscript>
+</body>
+</html>

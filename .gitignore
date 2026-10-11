@@ -1,0 +1,26 @@
+node_modules/
+.DS_Store
+output/
+.playwright-cli/
+playwright.config.json
+
+# Local development notes and manual checks
+/docs/DESIGN.md
+/docs/DEVELOPMENT.md
+/docs/PROTOTYPE-v0.3.md
+/docs/PROTOTYPE-v0.4.md
+/docs/QA.md
+/docs/REVIEW.md
+/review/first-song.html
+/scripts/audio-qa.js
+/scripts/browser-qa.js
+/scripts/chrome-qa.config.json
+/scripts/effects-qa.js
+/scripts/mobile-qa.js
+/scripts/review-qa.js
+/scripts/sample-qa.js
+/scripts/set-sample-qa.js
+/scripts/startup-qa.js
+
+# Analysis metadata generated alongside the public audio samples
+/review/*-musicbox.json
